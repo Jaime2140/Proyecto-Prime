@@ -1,0 +1,51 @@
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+
+# Carpetas de configuración de usuario (ESTO ES LO QUE TE FALTA)
+/[Uu]ser[Ss]ettings/
+/[Aa]sset[Ss]tores[Cc]ache/
+/[Pp]roject[Ss]ettings/ProjectVersion.txt
+# Nota: ProjectSettings en general se sube, pero algunos archivos específicos no.
+# Sin embargo, para un proyecto personal, es más seguro subir ProjectSettings 
+# EXCEPTO lo que sea local.
+
+# Archivos de Visual Studio / Code
+.vscode/
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svclog
+*.pdb
+*.opendb
+*.VC.db
+
+# Reportes de crash
+sysinfo.txt
+
+# Builds de WebGL
+*.js.gz
+*.wasm.gz
+*.data.gz
+*.mem.gz
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
