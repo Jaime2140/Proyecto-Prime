@@ -561,11 +561,11 @@ MonoBehaviour:
   mapContainer: {fileID: 1291456308}
   mapImage: {fileID: 1668094294}
   pixelsPerTile: 16
+  floorColor: {r: 1, g: 1, b: 1, a: 1}
   wallColor: {r: 0, g: 0, b: 0, a: 1}
-  floorColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   streetColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  buildingColor: {r: 0.6627451, g: 0.6627451, b: 0.6627451, a: 1}
-  parkColor: {r: 0, g: 0.5, b: 0, a: 1}
+  buildingColor: {r: 1, g: 0, b: 0, a: 1}
+  parkColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &433335137
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGridMovement
   dungeonMap: {fileID: 1374821731}
-  position: {x: 1, y: 1}
+  position: {x: 3, y: 3}
   facing: 0
 --- !u!114 &433335140
 MonoBehaviour:
@@ -663,6 +663,31 @@ MonoBehaviour:
   viewDistance: 3
   depthOffset: 100
   tileVisuals:
+  - type: 3
+    floor: []
+    leftFloor: []
+    rightFloor: []
+    corridor: []
+    frontWall:
+    - {fileID: 2135922519566826676, guid: f0d790475921e1740abed3ceb66c644d, type: 3}
+    - {fileID: 6270740729817671066, guid: f7fb8c94e9783c74e8354ca0c7616f74, type: 3}
+    - {fileID: -7848594379579202276, guid: 4c0a6c141a8b767419ae29b2b8fb0a03, type: 3}
+    leftWall:
+    - {fileID: -8946220024576771128, guid: caba3f438471ff6478d1872a067510f4, type: 3}
+    - {fileID: -231099991944240959, guid: 516e08c44db93b9489cf604fbf2f5ecd, type: 3}
+    - {fileID: -4127552028798771455, guid: 07770f5d8a2cdb040bd1de554640558e, type: 3}
+    rightWall:
+    - {fileID: 9188375423640904455, guid: b74d094c60c066d41af9f7e7eae66845, type: 3}
+    - {fileID: 7979192591206527423, guid: e7a0fbd606565a8439b185bc60838102, type: 3}
+    - {fileID: 7106774024168127708, guid: 7c275c961f5a7ad4d9a644e69867b812, type: 3}
+    frontLeftWall:
+    - {fileID: -3339214149988715855, guid: 67e0b095ed758dc4d841594f782dfd27, type: 3}
+    - {fileID: -666621912501517461, guid: e40b24dea65109a4e9e4940a3a59acf5, type: 3}
+    - {fileID: -2324229669130840236, guid: ecf14232aeb2d6946a962aa6b73da2e3, type: 3}
+    frontRightWall:
+    - {fileID: -4628792523929968307, guid: bbef54c0914ec9643bff6a0e64b5dd8a, type: 3}
+    - {fileID: 1294457319161381497, guid: 32a9fd27bcfc8264b97585d388a6f615, type: 3}
+    - {fileID: -3900060098726469185, guid: fab2074328e1a1f46a4907f19bdcbefb, type: 3}
   - type: 0
     floor: []
     leftFloor: []
@@ -1591,7 +1616,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 938737367}
-  - component: {fileID: 938737366}
   m_Layer: 0
   m_Name: EncounterSystem
   m_TagString: Untagged
@@ -1599,21 +1623,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &938737366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938737365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39f18f82adf6324886003aae951ffb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RandomEncounter
-  combatPanel: {fileID: 0}
-  encounterChance: 0
-  playerMovement: {fileID: 433335139}
 --- !u!4 &938737367
 Transform:
   m_ObjectHideFlags: 0
@@ -3163,10 +3172,10 @@ MonoBehaviour:
   cellSize: 1
   floorColor: {r: 1, g: 1, b: 1, a: 1}
   wallColor: {r: 0, g: 0, b: 0, a: 1}
-  buildingColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
-  streetColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  streetColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  buildingColor: {r: 1, g: 0, b: 0, a: 1}
   parkColor: {r: 0, g: 1, b: 0, a: 1}
-  playerColor: {r: 1, g: 0, b: 1, a: 1}
+  playerColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!4 &1374821733
 Transform:
   m_ObjectHideFlags: 0

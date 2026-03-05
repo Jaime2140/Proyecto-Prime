@@ -10,11 +10,11 @@ public class DungeonTopDownRenderer : MonoBehaviour
     [Header("Colores por TileType")]
     public Color floorColor = Color.white;
     public Color wallColor = Color.black;
-    public Color buildingColor = new Color(0.3f, 0.3f, 0.3f);
-    public Color streetColor = new Color(0.7f, 0.7f, 0.7f);
+    public Color streetColor = Color.gray;
+    public Color buildingColor = Color.red;
     public Color parkColor = Color.green;
 
-    public Color playerColor = Color.magenta;
+    public Color playerColor = Color.purple;
 
     void OnDrawGizmos()
     {
@@ -39,7 +39,6 @@ public class DungeonTopDownRenderer : MonoBehaviour
             }
         }
 
-        // Dibujar jugador
         if (player != null)
         {
             Gizmos.color = playerColor;
@@ -56,6 +55,9 @@ public class DungeonTopDownRenderer : MonoBehaviour
     {
         switch (tile)
         {
+            case TileType.Empty:
+                return Color.clear;
+                
             case TileType.Wall:
                 return wallColor;
 

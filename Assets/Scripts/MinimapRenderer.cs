@@ -15,11 +15,11 @@ public class MinimapRenderer : MonoBehaviour
     public int pixelsPerTile = 10; // ¡Zoom! Cuantos píxeles de UI mide una casilla
 
     [Header("Colores del Mapa")]
+    public Color floorColor = Color.white;
     public Color wallColor = Color.black;
-    public Color floorColor = Color.gray;
     public Color streetColor = Color.gray;
-    public Color buildingColor = Color.darkGray;
-    public Color parkColor = new Color(0, 0.5f, 0); // Verde oscuro
+    public Color buildingColor = Color.red;
+    public Color parkColor = Color.green;
 
     private Texture2D texture;
 
@@ -40,7 +40,6 @@ public class MinimapRenderer : MonoBehaviour
         int width = dungeonMap.Width;
         int height = dungeonMap.Height;
 
-        // 1. Generar la textura (Igual que antes)
         texture = new Texture2D(width, height);
         texture.filterMode = FilterMode.Point;
         texture.wrapMode = TextureWrapMode.Clamp;
@@ -56,11 +55,8 @@ public class MinimapRenderer : MonoBehaviour
         texture.Apply();
         mapImage.texture = texture;
 
-        // 2. IMPORTANTE: Ajustar el tamaño real del RawImage según el Zoom
-        // Si el mapa es de 20x20 y cada tile son 10px, la imagen medirá 200x200
         mapImage.rectTransform.sizeDelta = new Vector2(width * pixelsPerTile, height * pixelsPerTile);
         
-        // Aseguramos que el Pivot esté en 0,0 para que las matemáticas funcionen fácil
         mapImage.rectTransform.pivot = Vector2.zero;
     }
 
@@ -68,18 +64,12 @@ public class MinimapRenderer : MonoBehaviour
     {
         if (player == null || mapContainer == null) return;
 
-        // 1. Dónde está el jugador en coordenadas del mapa (Píxeles UI)
-        // El +0.5f es para centrar en la casilla
         float playerMapX = (player.position.x + 0.5f) * pixelsPerTile;
         float playerMapY = (player.position.y + 0.5f) * pixelsPerTile;
 
-        // 2. Calculamos el centro de nuestra ventana (visor)
         float windowCenterX = mapContainer.rect.width / 2f;
         float windowCenterY = mapContainer.rect.height / 2f;
 
-        // 3. Movemos el MAPA en dirección contraria para que el punto del jugador 
-        // coincida con el centro de la ventana.
-        // Fórmula: PosiciónMapa = CentroVentana - PosiciónJugadorEnMapa
         Vector2 targetPos = new Vector2(windowCenterX - playerMapX, windowCenterY - playerMapY);
 
         mapImage.rectTransform.anchoredPosition = targetPos;
@@ -89,6 +79,7 @@ public class MinimapRenderer : MonoBehaviour
     {
         switch (tile)
         {
+            case TileType.Empty: return Color.clear;
             case TileType.Wall:     return wallColor;
             case TileType.Building: return buildingColor;
             case TileType.Street:   return streetColor;
