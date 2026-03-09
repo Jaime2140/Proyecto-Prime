@@ -8,11 +8,11 @@ public class MinimapRenderer : MonoBehaviour
     public PlayerGridMovement player;
     
     [Header("UI Components")]
-    public RectTransform mapContainer; // El objeto padre de 125x86 (La ventana)
-    public RawImage mapImage;          // El RawImage hijo (El mapa gigante)
+    public RectTransform mapContainer;
+    public RawImage mapImage;
     
     [Header("Configuración Visual")]
-    public int pixelsPerTile = 10; // ¡Zoom! Cuantos píxeles de UI mide una casilla
+    public int pixelsPerTile = 10;
 
     [Header("Colores del Mapa")]
     public Color floorColor = Color.white;

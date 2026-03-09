@@ -42,8 +42,6 @@ public class DungeonObjectRenderer : MonoBehaviour
         RenderDungeon();
     }
 
-    // --------------------------------------------------
-
     Sprite GetSprite(Sprite[] collection, int depthIndex)
     {
         if (collection == null || collection.Length == 0) return null;
@@ -58,8 +56,6 @@ public class DungeonObjectRenderer : MonoBehaviour
 
         return defaultVisuals != null ? defaultVisuals : tileVisuals[0];
     }
-
-    // --------------------------------------------------
 
     void RenderDungeon()
     {
@@ -77,34 +73,24 @@ public class DungeonObjectRenderer : MonoBehaviour
             Vector2Int centerCell = origin + forward * d;
             Vector2Int prevCell = origin + forward * (d - 1);
 
-            // 1. Determinar si hay pared al frente (usamos la celda destino)
             bool isFrontWall = dungeonMap.BlocksView(centerCell.x, centerCell.y);
 
-            // 2. Obtener los visuales
-            // CORRECCIÓN: Volvemos a usar 'prevCell' para el suelo, para mantener la continuidad visual correcta.
             TileVisualSet floorVis = GetVisuals(dungeonMap.GetTile(prevCell.x, prevCell.y));
-            // Usamos 'centerCell' para el contenido de la celda (pared o relleno).
             TileVisualSet centerVis = GetVisuals(dungeonMap.GetTile(centerCell.x, centerCell.y));
 
-            // ================= FLOOR (Suelo con perspectiva)
             if (layer.floor)
             {
-                // Dibuja el suelo basándose en la celda anterior (continuidad)
                 layer.floor.sprite = GetSprite(floorVis.floor, i);
                 layer.floor.enabled = true;
             }
 
-            // ================= FRONT WALL / CORRIDOR (Centro del fondo)
             if (isFrontWall && layer.frontWall)
             {
-                // Si es pared, dibujamos la pared
                 layer.frontWall.sprite = GetSprite(centerVis.frontWall, i);
                 layer.frontWall.enabled = true;
             }
             else if (!isFrontWall && layer.corridor)
             {
-                // Si NO es pared (es Park, Street, etc.), intentamos dibujar su relleno central.
-                // IMPORTANTE: Esto solo dibujará algo si el Tile tiene sprites en la lista 'corridor'.
                 Sprite spriteToRender = GetSprite(centerVis.corridor, i);
                 
                 if (spriteToRender != null)
@@ -114,7 +100,6 @@ public class DungeonObjectRenderer : MonoBehaviour
                 }
             }
 
-            // ================= LEFT
             Vector2Int leftTarget = prevCell + left;
             bool wallAtLeft = dungeonMap.BlocksView(leftTarget.x, leftTarget.y);
             TileVisualSet leftVis = GetVisuals(dungeonMap.GetTile(leftTarget.x, leftTarget.y));
@@ -130,7 +115,6 @@ public class DungeonObjectRenderer : MonoBehaviour
                 layer.leftFloor.enabled = true;
             }
 
-            // ================= RIGHT
             Vector2Int rightTarget = prevCell + right;
             bool wallAtRight = dungeonMap.BlocksView(rightTarget.x, rightTarget.y);
             TileVisualSet rightVis = GetVisuals(dungeonMap.GetTile(rightTarget.x, rightTarget.y));
@@ -146,7 +130,6 @@ public class DungeonObjectRenderer : MonoBehaviour
                 layer.rightFloor.enabled = true;
             }
 
-            // ================= DEEP CORNERS
             Vector2Int deepLeft = centerCell + left;
             Vector2Int deepRight = centerCell + right;
 
@@ -166,24 +149,22 @@ public class DungeonObjectRenderer : MonoBehaviour
         }
     }
 
-    // --------------------------------------------------
-
     void ApplySortingOrders()
     {
         for (int i = 0; i < layers.Length; i++)
         {
-            int offset = (layers.Length - 1 - i) * depthOffset;
+            int offset = ((layers.Length - 1 - i) * depthOffset) + 100;
             DepthLayer l = layers[i];
 
             SetOrder(l.floor, offset + 0);
-            SetOrder(l.corridor, offset + 1); // Corridor encima de floor
+            SetOrder(l.corridor, offset + 1);
             SetOrder(l.leftFloor, offset + 5);
             SetOrder(l.rightFloor, offset + 5);
             SetOrder(l.frontLeftWall, offset + 10);
             SetOrder(l.frontRightWall, offset + 10);
             SetOrder(l.leftWall, offset + 20);
             SetOrder(l.rightWall, offset + 20);
-            SetOrder(l.frontWall, offset + 30); // Pared encima de todo
+            SetOrder(l.frontWall, offset + 30);
         }
     }
 

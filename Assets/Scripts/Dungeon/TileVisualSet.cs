@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class TileVisualSet
 {
-    public TileType type; // ¿Qué es? (Wall, Building, Park...)
+    public TileType type;
 
     [Header("Suelo")]
     public Sprite[] floor;
