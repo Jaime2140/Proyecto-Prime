@@ -13,9 +13,17 @@ public class PlayerGridMovement : MonoBehaviour
     
     private GameInputActions inputActions;
 
+    [Header("Efectos Visuales")]
+    public SmoothTurnEffect turnEffect;
+
     void Awake()
     {
         inputActions = new GameInputActions();
+
+        if (turnEffect == null)
+        {
+            turnEffect = GetComponent<SmoothTurnEffect>();
+        }
     }
 
     void OnEnable()
@@ -91,12 +99,20 @@ public class PlayerGridMovement : MonoBehaviour
 
     void TurnLeft()
     {
+        if (turnEffect != null)
+        {
+            StartCoroutine(turnEffect.AnimateTurn(-1));
+        }
         facing = (Direction)(((int)facing + 3) % 4);
         Debug.Log("Mirando: " + facing);
     }
 
     void TurnRight()
     {
+        if (turnEffect != null)
+        {
+            StartCoroutine(turnEffect.AnimateTurn(1));
+        }
         facing = (Direction)(((int)facing + 1) % 4);
         Debug.Log("Mirando: " + facing);
     }
