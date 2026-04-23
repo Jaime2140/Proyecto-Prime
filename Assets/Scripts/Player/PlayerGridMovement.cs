@@ -8,6 +8,7 @@ public class PlayerGridMovement : MonoBehaviour
     
     [Header("Estado")]
     public Vector2Int position = new Vector2Int(1, 1);
+
     public enum Direction { North, East, South, West }
     public Direction facing = Direction.North;
     
@@ -15,6 +16,9 @@ public class PlayerGridMovement : MonoBehaviour
 
     [Header("Efectos Visuales")]
     public SmoothTurnEffect turnEffect;
+
+    [Header("Sistemas")]
+    public EncounterSystem encounterSystem;
 
     void Awake()
     {
@@ -31,7 +35,8 @@ public class PlayerGridMovement : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMoveInput;
 
-        inputActions.UI.TogglePause.performed += _ => GameManager.Instance.TogglePause();
+        inputActions.UI.TogglePause.performed += 
+            _ => GameManager.Instance.TogglePause();
     }
 
     void OnDisable()
@@ -41,6 +46,9 @@ public class PlayerGridMovement : MonoBehaviour
 
     private void OnMoveInput(InputAction.CallbackContext context)
     {
+        if (turnEffect != null && turnEffect.IsTurning)
+            return;
+
         Vector2 inputDir = context.ReadValue<Vector2>();
 
         if (inputDir.y > 0.5f)
@@ -59,7 +67,8 @@ public class PlayerGridMovement : MonoBehaviour
 
     void TryMoveForward()
     {
-        if (GameManager.Instance == null || GameManager.Instance.currentState != GameState.Exploration) 
+        if (GameManager.Instance == null || 
+            GameManager.Instance.currentState != GameState.Exploration) 
             return;
 
         MoveForward(); 
@@ -67,7 +76,8 @@ public class PlayerGridMovement : MonoBehaviour
 
     void TryTurnLeft()
     {
-        if (GameManager.Instance == null || GameManager.Instance.currentState != GameState.Exploration) 
+        if (GameManager.Instance == null || 
+            GameManager.Instance.currentState != GameState.Exploration) 
             return;
             
         TurnLeft();
@@ -75,7 +85,8 @@ public class PlayerGridMovement : MonoBehaviour
 
     void TryTurnRight()
     {
-        if (GameManager.Instance == null || GameManager.Instance.currentState != GameState.Exploration) 
+        if (GameManager.Instance == null || 
+            GameManager.Instance.currentState != GameState.Exploration) 
             return;
 
         TurnRight();
@@ -89,7 +100,13 @@ public class PlayerGridMovement : MonoBehaviour
         if (!dungeonMap.BlocksMovement(target.x, target.y))
         {
             position = target;
+
             Debug.Log("Posición: " + position);
+
+            if (encounterSystem != null)
+            {
+                encounterSystem.CheckEncounter();
+            }
         }
         else
         {
@@ -101,20 +118,36 @@ public class PlayerGridMovement : MonoBehaviour
     {
         if (turnEffect != null)
         {
-            StartCoroutine(turnEffect.AnimateTurn(-1));
+            StartCoroutine(
+                turnEffect.AnimateTurn(-1, () =>
+                {
+                    facing = (Direction)(((int)facing + 3) % 4);
+                    Debug.Log("Mirando: " + facing);
+                })
+            );
         }
-        facing = (Direction)(((int)facing + 3) % 4);
-        Debug.Log("Mirando: " + facing);
+        else
+        {
+            facing = (Direction)(((int)facing + 3) % 4);
+        }
     }
 
     void TurnRight()
     {
         if (turnEffect != null)
         {
-            StartCoroutine(turnEffect.AnimateTurn(1));
+            StartCoroutine(
+                turnEffect.AnimateTurn(1, () =>
+                {
+                    facing = (Direction)(((int)facing + 1) % 4);
+                    Debug.Log("Mirando: " + facing);
+                })
+            );
         }
-        facing = (Direction)(((int)facing + 1) % 4);
-        Debug.Log("Mirando: " + facing);
+        else
+        {
+            facing = (Direction)(((int)facing + 1) % 4);
+        }
     }
 
     Vector2Int DirectionToVector(Direction dir)
@@ -126,6 +159,7 @@ public class PlayerGridMovement : MonoBehaviour
             case Direction.East:  return Vector2Int.right;
             case Direction.West:  return Vector2Int.left;
         }
+
         return Vector2Int.zero;
     }
 }
