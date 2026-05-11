@@ -39,6 +39,9 @@ public class ActionMenuController : MonoBehaviour
 
         currentCharacter = character;
 
+        RectTransform rect = actionMenuPanel.GetComponent<RectTransform>();
+        rect.anchoredPosition = new Vector2(105f, 96.5f);
+
         if (character.baseAttack != null) textMove1.text = character.baseAttack.abilityName;
         if (character.skill != null) textMove2.text = character.skill.abilityName;
         if (character.guard != null) textMove3.text = character.guard.abilityName;
@@ -62,7 +65,7 @@ public class ActionMenuController : MonoBehaviour
 
         if (CombatManager.Instance != null)
         {
-            CombatManager.Instance.QueuePlayerAction(currentCharacter, selectedAbility);
+            CombatManager.Instance.PreparePlayerAction(currentCharacter, selectedAbility);
         }
     }
 }

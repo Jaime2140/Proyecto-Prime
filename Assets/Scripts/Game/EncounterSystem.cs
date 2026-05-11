@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EncounterSystem : MonoBehaviour
 {
     [Header("Configuración de Encuentros")]
-    [Tooltip("Probabilidad del 0 al 100 de que salga un enemigo al dar un paso")]
     [Range(0f, 100f)]
     public float encounterChance = 12f;
-
-    [Tooltip("Pasos de 'gracia' donde es imposible que salgan enemigos")]
     public int safeSteps = 3; 
+
+    [Header("Grupos de Enemigos Posibles")]
+    [Tooltip("Arrastra aquí tus ScriptableObjects de EnemyGroupData")]
+    public List<EnemyGroupData> possibleEncounters;
 
     private int currentSteps = 0;
 
@@ -33,11 +35,14 @@ public class EncounterSystem : MonoBehaviour
         
         if (CombatManager.Instance != null)
         {
-            CombatManager.Instance.StartCombat();
-        }
-        else
-        {
-            Debug.LogError("No se encontró el CombatManager en la escena.");
+            EnemyGroupData selectedGroup = null;
+            if (possibleEncounters.Count > 0)
+            {
+                int randomIndex = Random.Range(0, possibleEncounters.Count);
+                selectedGroup = possibleEncounters[randomIndex];
+            }
+
+            CombatManager.Instance.StartCombat(selectedGroup);
         }
     }
 }

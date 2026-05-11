@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b096bed9977a9428817dba87ed3ab5, type: 3}
+  m_Name: Violet
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  characterName: Violet
+  role: Protagonista
+  portrait: {fileID: 0}
+  maxHP: 100
+  attack: 20
+  defense: 50
+  speed: 20
+  baseAttack: {fileID: 11400000, guid: 9069eb2ddc041ee40bae069b4ec5db70, type: 2}
+  skill: {fileID: 11400000, guid: 43f9010487328174798ca0e38867540f, type: 2}
+  guard: {fileID: 11400000, guid: 91eab407ad1a77b43b26d210bc2ac974, type: 2}
+  ultimate: {fileID: 0}
+  tributeCoverSlot: {fileID: 0}
